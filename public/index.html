@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Card Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pokémon TCG Finder</h1>
+            <p>Find your favorite cards by their ID (e.g., swsh1-1)</p>
+        </header>
+
+        <section class="search-section">
+            <div class="lang-selector">
+                <button id="btnEn" class="lang-btn active">English</button>
+                <button id="btnJa" class="lang-btn">Japanese</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="cardId" placeholder="Enter Card ID..." value="sv05-020">
+                <button id="searchBtn">Search</button>
+            </div>
+        </section>
+
+        <main id="result" class="result-container hidden">
+            <div class="card-display">
+                <div class="image-wrapper">
+                    <img id="cardImage" src="" alt="Pokemon Card">
+                </div>
+                <div class="card-info">
+                    <h2 id="cardName">Card Name</h2>
+                    <div class="badge-row">
+                        <span id="cardType" class="badge">Type</span>
+                        <span id="cardHP" class="badge">HP 100</span>
+                    </div>
+                    <p id="cardDescription" class="description">Description goes here</p>
+                    
+                    <div class="attacks-section">
+                        <h3>Attacks</h3>
+                        <ul id="attacksList"></ul>
+                    </div>
+
+                    <div class="footer-info">
+                        <span id="cardSet">Set Name</span>
+                        <span id="cardRarity">Rarity</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Catching 'em all...</p>
+        </div>
+
+        <div id="errorMessage" class="error hidden">
+            <p>Card not found. Try another ID!</p>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
