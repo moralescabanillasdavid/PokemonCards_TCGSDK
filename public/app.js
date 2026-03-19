@@ -16,7 +16,6 @@ function setLanguage(lang) {
     currentLang = lang;
     btnEn.classList.toggle('active', lang === 'en');
     btnJa.classList.toggle('active', lang === 'ja');
-    // Refresh current search if any
     const id = cardIdInput.value.trim();
     if (id) fetchCard(id);
 }
@@ -30,6 +29,10 @@ const cardDescription = document.getElementById('cardDescription');
 const attacksList = document.getElementById('attacksList');
 const cardSet = document.getElementById('cardSet');
 const cardRarity = document.getElementById('cardRarity');
+
+// Price elements
+const cardPriceEUR = document.getElementById('cardPriceEUR');
+const cardPriceUSD = document.getElementById('cardPriceUSD');
 
 searchBtn.addEventListener('click', () => {
     const id = cardIdInput.value.trim();
@@ -71,17 +74,17 @@ async function fetchCard(id) {
 
 function updateUI(card) {
     // Basic info
-    cardImage.src = `${card.image}/high.webp`;
-    cardImage.alt = card.name;
-    cardName.textContent = card.name;
-    cardType.textContent = card.types ? card.types.join(', ') : 'Unknown';
-    cardHP.textContent = card.hp ? `HP ${card.hp}` : 'HP -';
-    cardDescription.textContent = card.description || 'No description available for this card.';
+    cardImage.src = `${card.card.image}/high.webp`;
+    cardImage.alt = card.card.name;
+    cardName.textContent = card.card.name;
+    cardType.textContent = card.card.types ? card.card.types.join(', ') : 'Unknown';
+    cardHP.textContent = card.card.hp ? `HP ${card.card.hp}` : 'HP -';
+    cardDescription.textContent = card.card.description || 'No description available for this card.';
     
     // Attacks
     attacksList.innerHTML = '';
-    if (card.attacks && card.attacks.length > 0) {
-        card.attacks.forEach(atk => {
+    if (card.card.attacks && card.card.attacks.length > 0) {
+        card.card.attacks.forEach(atk => {
             const li = document.createElement('li');
             li.innerHTML = `
                 <div class="atk-top">
@@ -97,8 +100,15 @@ function updateUI(card) {
     }
 
     // Set & Rarity
-    cardSet.textContent = card.set.name;
-    cardRarity.textContent = card.rarity || 'Common';
+    cardSet.textContent = card.card.set.name;
+    cardRarity.textContent = card.card.rarity || 'Common';
+
+    // Prices
+    const pricing = card.pricing; // Assuming pricing is inside the card object
+    if (pricing) {
+        cardPriceEUR.textContent = `€${pricing.eur ? pricing.eur : '0.00'}`;
+        cardPriceUSD.textContent = `$${pricing.usd ? pricing.usd.holo : '0.00'}`;
+    }
 
     resultContainer.classList.remove('hidden');
 }
@@ -116,4 +126,4 @@ function showError() {
 }
 
 // Initial fetch
-fetchCard('swsh1-1');
+fetchCard('sv05-020');
